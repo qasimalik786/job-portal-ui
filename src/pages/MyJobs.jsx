@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTheme } from '../context/ThemeContext';
 import { useJobsData } from '../contexts/JobsDataContext';
+import { Tooltip } from '../components/Tooltip';
 
 const MyJobs = () => {
   const { theme } = useTheme();
@@ -349,62 +350,70 @@ const MyJobs = () => {
                       {/* Status Buttons */}
                       <td className="px-6 py-4">
                         <div className="flex gap-1">
-                          <button
-                            onClick={() => handleStatusChange(job.id, 'ACTIVE')}
-                            disabled={updatingJobId === job.id || job.status === 'ACTIVE'}
-                            title="Set to Active"
-                            className={`px-2 py-1 rounded text-xs font-bold transition-all ${
-                              job.status === 'ACTIVE'
-                                ? 'bg-green-600 text-white'
-                                : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-green-100 dark:hover:bg-green-900/30'
-                            } disabled:opacity-50 disabled:cursor-not-allowed`}
-                          >
-                            A
-                          </button>
-                          <button
-                            onClick={() => handleStatusChange(job.id, 'CLOSED')}
-                            disabled={updatingJobId === job.id || job.status === 'CLOSED'}
-                            title="Set to Closed"
-                            className={`px-2 py-1 rounded text-xs font-bold transition-all ${
-                              job.status === 'CLOSED'
-                                ? 'bg-red-600 text-white'
-                                : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-red-100 dark:hover:bg-red-900/30'
-                            } disabled:opacity-50 disabled:cursor-not-allowed`}
-                          >
-                            C
-                          </button>
-                          <button
-                            onClick={() => handleStatusChange(job.id, 'DRAFT')}
-                            disabled={updatingJobId === job.id || job.status === 'DRAFT'}
-                            title="Set to Draft"
-                            className={`px-2 py-1 rounded text-xs font-bold transition-all ${
-                              job.status === 'DRAFT'
-                                ? 'bg-yellow-600 text-white'
-                                : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-yellow-100 dark:hover:bg-yellow-900/30'
-                            } disabled:opacity-50 disabled:cursor-not-allowed`}
-                          >
-                            D
-                          </button>
+                          <Tooltip text="Set to Active">
+                            <button
+                              onClick={() => handleStatusChange(job.id, 'ACTIVE')}
+                              disabled={updatingJobId === job.id || job.status === 'ACTIVE'}
+                              aria-label="Set to Active"
+                              className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                                job.status === 'ACTIVE'
+                                  ? 'bg-green-600 text-white'
+                                  : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-green-100 dark:hover:bg-green-900/30'
+                              } disabled:opacity-50 disabled:cursor-not-allowed`}
+                            >
+                              A
+                            </button>
+                          </Tooltip>
+                          <Tooltip text="Set to Closed">
+                            <button
+                              onClick={() => handleStatusChange(job.id, 'CLOSED')}
+                              disabled={updatingJobId === job.id || job.status === 'CLOSED'}
+                              aria-label="Set to Closed"
+                              className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                                job.status === 'CLOSED'
+                                  ? 'bg-red-600 text-white'
+                                  : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-red-100 dark:hover:bg-red-900/30'
+                              } disabled:opacity-50 disabled:cursor-not-allowed`}
+                            >
+                              C
+                            </button>
+                          </Tooltip>
+                          <Tooltip text="Set to Draft">
+                            <button
+                              onClick={() => handleStatusChange(job.id, 'DRAFT')}
+                              disabled={updatingJobId === job.id || job.status === 'DRAFT'}
+                              aria-label="Set to Draft"
+                              className={`px-2 py-1 rounded text-xs font-bold transition-all ${
+                                job.status === 'DRAFT'
+                                  ? 'bg-yellow-600 text-white'
+                                  : 'bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-yellow-100 dark:hover:bg-yellow-900/30'
+                              } disabled:opacity-50 disabled:cursor-not-allowed`}
+                            >
+                              D
+                            </button>
+                          </Tooltip>
                         </div>
                       </td>
 
                       {/* Actions */}
                       <td className="px-6 py-4">
                         <div className="flex gap-2">
-                          <Link
-                            to={`/job-applicants/${job.id}`}
-                            className="px-3 py-1.5 bg-primary-600 hover:bg-primary-700 text-white rounded text-xs font-semibold transition-colors"
-                            title="View Applicants"
-                          >
-                            Applicants
-                          </Link>
-                          <Link
-                            to={`/jobs/${job.id}`}
-                            className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-primary-600 hover:text-primary-600 dark:hover:text-primary-400 rounded text-xs font-semibold transition-colors"
-                            title="View Job Details"
-                          >
-                            View
-                          </Link>
+                          <Tooltip text="View Applicants">
+                            <Link
+                              to={`/job-applicants/${job.id}`}
+                              className="px-3 py-1.5 bg-primary-600 hover:bg-primary-700 text-white rounded text-xs font-semibold transition-colors"
+                            >
+                              Applicants
+                            </Link>
+                          </Tooltip>
+                          <Tooltip text="View Job Details">
+                            <Link
+                              to={`/jobs/${job.id}`}
+                              className="px-3 py-1.5 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:border-primary-600 hover:text-primary-600 dark:hover:text-primary-400 rounded text-xs font-semibold transition-colors"
+                            >
+                              View
+                            </Link>
+                          </Tooltip>
                         </div>
                       </td>
 

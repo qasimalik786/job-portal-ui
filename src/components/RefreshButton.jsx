@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useJobsData } from '../contexts/JobsDataContext';
 import { useCompanies } from '../contexts/CompaniesContext';
+import { Tooltip } from './Tooltip';
 
 const RefreshButton = ({ showLabel = true, className = '' }) => {
   const { forceRefresh: refreshJobs, getCacheAge: getJobsCacheAge, loading: jobsLoading } = useJobsData();
@@ -35,38 +36,40 @@ const RefreshButton = ({ showLabel = true, className = '' }) => {
 
   return (
     <div className={`flex items-center gap-2 ${className}`}>
-      <button
-        onClick={handleRefresh}
-        disabled={isLoading}
-        className={`
-          inline-flex items-center gap-2 px-4 py-2 rounded-lg
-          font-medium transition-all duration-200
-          ${isLoading
-            ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
-            : 'bg-primary-600 hover:bg-primary-700 text-white shadow-md hover:shadow-lg active:scale-95'
-          }
-        `}
-        title={`Last updated: ${formatCacheAge()}`}
-      >
-        <svg
-          className={`w-5 h-5 ${isLoading ? 'animate-spin' : ''}`}
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+      <Tooltip text={`Last updated: ${formatCacheAge()}`} position="bottom">
+        <button
+          onClick={handleRefresh}
+          disabled={isLoading}
+          aria-label="Refresh data"
+          className={`
+            inline-flex items-center gap-2 px-4 py-2 rounded-lg
+            font-medium transition-all duration-200
+            ${isLoading
+              ? 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 cursor-not-allowed'
+              : 'bg-primary-600 hover:bg-primary-700 text-white shadow-md hover:shadow-lg active:scale-95'
+            }
+          `}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-          />
-        </svg>
-        {showLabel && (
-          <span className="hidden sm:inline">
-            {isLoading ? 'Refreshing...' : 'Refresh'}
-          </span>
-        )}
-      </button>
+          <svg
+            className={`w-5 h-5 ${isLoading ? 'animate-spin' : ''}`}
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+            />
+          </svg>
+          {showLabel && (
+            <span className="hidden sm:inline">
+              {isLoading ? 'Refreshing...' : 'Refresh'}
+            </span>
+          )}
+        </button>
+      </Tooltip>
 
       {showLabel && !isLoading && (
         <span className="text-xs text-gray-500 dark:text-gray-400">
